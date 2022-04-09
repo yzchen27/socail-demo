@@ -1,8 +1,11 @@
 package com.itheima.test;
 
+import com.tanhua.commons.utils.DateUtil;
 import io.jsonwebtoken.*;
 import org.junit.Test;
 
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,17 +14,14 @@ public class JwtTest {
 
     @Test
     public void testCreateToken() {
-        //生成token
-        //1、准备数据
-        Map map = new HashMap();
-        map.put("id",1);
-        map.put("mobile","13800138000");
-        //2、使用JWT的工具类生成token
-        long now = System.currentTimeMillis();
+        //1.生成token
+        Map<String, Object> info = new HashMap<>();
+        info.put("id", "1000");
+        info.put("mobile", "18120858670");
         String token = Jwts.builder()
-                .signWith(SignatureAlgorithm.HS512, "itcast") //指定加密算法
-                .setClaims(map) //写入数据
-                .setExpiration(new Date(now + 30000)) //失效时间
+                .signWith(SignatureAlgorithm.HS512, "cyz".getBytes(StandardCharsets.UTF_8)) // 指定算法、jwt的secret
+                .setClaims(info)
+                .setExpiration(DateUtil.getExpire())
                 .compact();
         System.out.println(token);
     }
@@ -34,10 +34,10 @@ public class JwtTest {
      */
     @Test
     public void testParseToken() {
-        String token = "eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzgwMDEzODAwMCIsImlkIjoxLCJleHAiOjE2MTgzOTcxOTV9.2lQiovogL5tJa0px4NC-DW7zwHFqZuwhnL0HPAZunieGphqnMPduMZ5TtH_mxDrgfiskyAP63d8wzfwAj-MIVw";
+        String token = "eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxODEyMDg1ODY3MCIsImlkIjoiMTAwMCIsImV4cCI6MTY0OTU5Mzk4OX0.NymbP6_3fyFF3tOWzEDKCZ4Cn1uESomLKIvMR5mV4U-TzdwTDaEnViL46mjXcDQFgYVaFM_Q06hMzf54fNI4Bw";
         try {
             Claims claims = Jwts.parser()
-                    .setSigningKey("itcast")
+                    .setSigningKey("cyz".getBytes(StandardCharsets.UTF_8))
                     .parseClaimsJws(token)
                     .getBody();
             Object id = claims.get("id");

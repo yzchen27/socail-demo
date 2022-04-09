@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteRepositoriesConfiguration">
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Central Repository" />
+      <option name="url" value="https://repo.huaweicloud.com/repository/maven/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Maven Central repository" />
+      <option name="url" value="https://repo1.maven.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="jboss.community" />
+      <option name="name" value="JBoss Community repository" />
+      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="snapshot_cn-south-1_46981e14034349f8b0f56eaba1e1f937_maven_2_0" />
+      <option name="name" value="snapshot_cn-south-1_46981e14034349f8b0f56eaba1e1f937_maven_2_0" />
+      <option name="url" value="https://devrepo-cn-south-1.devcloud.huaweicloud.com/artgalaxy/cn-south-1_46981e14034349f8b0f56eaba1e1f937_maven_2_0/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="release_cn-south-1_46981e14034349f8b0f56eaba1e1f937_maven_1_0" />
+      <option name="name" value="release_cn-south-1_46981e14034349f8b0f56eaba1e1f937_maven_1_0" />
+      <option name="url" value="https://devrepo-cn-south-1.devcloud.huaweicloud.com/artgalaxy/cn-south-1_46981e14034349f8b0f56eaba1e1f937_maven_1_0/" />
+    </remote-repository>
+  </component>
+</project>
