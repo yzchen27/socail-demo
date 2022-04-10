@@ -5,6 +5,7 @@ import com.tanhua.commons.utils.JwtUtils;
 import com.tanhua.dubbo.api.UserApi;
 import com.tanhua.model.domain.User;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -24,7 +25,7 @@ public class UserService {
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
 
-    @DubboReference
+    @DubboReference(version = "1.0.0")
     private UserApi userApi;
 
 
@@ -34,10 +35,9 @@ public class UserService {
      */
     public void sendMsg(String phone) {
         //1、随机生成6位数字
-        //String code = RandomStringUtils.randomNumeric(6);
-        String code = "123456";
+        String code = RandomStringUtils.randomNumeric(6);
         //2、调用template对象，发送手机短信
-        //template.sendSms(phone,code);
+        template.sendSms(phone,code);
         //3、将验证码存入到redis
         redisTemplate.opsForValue().set("CHECK_CODE_"+phone,code, Duration.ofMinutes(5));
     }
@@ -81,5 +81,9 @@ public class UserService {
         retMap.put("isNew",isNew);
 
         return retMap;
+    }
+
+    public User getUserByMobile(String mobile){
+        return userApi.findByMobile(mobile);
     }
 }

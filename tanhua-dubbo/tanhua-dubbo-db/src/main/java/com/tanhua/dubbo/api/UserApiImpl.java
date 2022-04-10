@@ -7,13 +7,16 @@ import com.tanhua.model.domain.User;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@DubboService
+/**
+ * @author yzchen
+ */
+@DubboService(version = "1.0.0")
 public class UserApiImpl  implements UserApi{
 
     @Autowired
     private UserMapper userMapper;
 
-    //根据手机号码查询用户
+    @Override
     public User findByMobile(String mobile) {
         QueryWrapper<User> qw = new QueryWrapper<>();
         qw.eq("mobile",mobile);
