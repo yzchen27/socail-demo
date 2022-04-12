@@ -1,10 +1,14 @@
 package com.tanhua.server.controller;
 
+import com.tanhua.commons.utils.JwtUtils;
+import com.tanhua.model.bo.UserInfoBO;
+import com.tanhua.model.vo.UserInfoVO;
 import com.tanhua.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.POST;
 import java.util.Map;
 
 @RestController
@@ -42,10 +46,17 @@ public class LoginController {
         return ResponseEntity.ok(retMap);
     }
 
-
-    @GetMapping("find/mobile/{mobile}")
-    public ResponseEntity getUserByMobile(@PathVariable String mobile){
-        return ResponseEntity.ok(userService.getUserByMobile(mobile));
+    /**
+     *  首次登录完善资料
+     * @return
+     */
+    @PostMapping("loginReginfo")
+    public ResponseEntity loginRegInfo(@RequestBody UserInfoVO userInfoVO,
+                                       @RequestHeader(value = "Authorization") String token){
+        UserInfoBO userInfoBO = JwtUtils.getClaims(token);
+        userService.loginRegInfo(userInfoVO, userInfoBO);
+        return ResponseEntity.ok(null);
     }
+
 
 }

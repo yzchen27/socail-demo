@@ -19,7 +19,7 @@ public class DateUtil {
      * @return
      */
     public static Date getExpire(){
-        LocalDateTime expireTime = LocalDateTime.now().plusDays(1L);
+        LocalDateTime expireTime = LocalDateTime.now().plusDays(30L);
         Instant instant = expireTime.toInstant(ZoneOffset.of("+8"));
         return Date.from(instant);
     }

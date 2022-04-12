@@ -1,5 +1,6 @@
 package com.tanhua.commons.utils;
 
+import cn.hutool.http.server.HttpServerRequest;
 import com.tanhua.model.bo.UserInfoBO;
 import io.jsonwebtoken.*;
 import lombok.Data;
@@ -11,8 +12,8 @@ import java.util.Map;
 
 public class JwtUtils {
 
-    // TOKEN的有效期1小时（S）
-    private static final int TOKEN_TIME_OUT = 3_600;
+    // TOKEN的有效期30天
+    private static final int TOKEN_TIME_OUT = 3_600 * 24 * 30;
 
     // 加密KEY
     private static final String TOKEN_SECRET = "cyz";
@@ -22,8 +23,8 @@ public class JwtUtils {
     public static String getToken(Map params){
         long currentTime = System.currentTimeMillis();
         return Jwts.builder()
-                .signWith(SignatureAlgorithm.HS512, TOKEN_SECRET) //加密方式
-                .setExpiration(new Date(currentTime + TOKEN_TIME_OUT * 1000)) //过期时间戳
+                .signWith(SignatureAlgorithm.HS512, TOKEN_SECRET.getBytes(StandardCharsets.UTF_8)) //加密方式
+                .setExpiration(DateUtil.getExpire()) //过期时间戳
                 .addClaims(params)
                 .compact();
     }
@@ -41,7 +42,8 @@ public class JwtUtils {
         }catch (ExpiredJwtException |SignatureException e){
             throw new SignatureException("token 异常:" + e.getMessage());
         }
-        return new UserInfoBO(Long.parseLong((String) body.get("id")), body.get("mobile").toString(), body.getExpiration());
+        Integer id = (Integer) body.get("id");
+        return new UserInfoBO(id.longValue(), body.get("mobile").toString(), body.getExpiration());
     }
 
 
