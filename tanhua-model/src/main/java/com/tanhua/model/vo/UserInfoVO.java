@@ -12,10 +12,15 @@ import java.io.Serializable;
  **/
 @Data
 public class UserInfoVO implements Serializable {
-    private final String UUID = "5f3c1852-18c8-45db-b15d-27dddc4bfc47";
-    private String gender;
-    private String nickname;
-    private String birthday;
-    private String city;
-    private String avatar;
+    private Long id; //用户id
+    private String nickname; //昵称
+    private String avatar; //用户头像
+    private String birthday; //生日
+    private String gender; //性别
+    private String age; //年龄
+    private String city; //城市
+    private String income; //收入
+    private String education; //学历
+    private String profession; //行业
+    private Integer marriage; //婚姻状态æ
 }

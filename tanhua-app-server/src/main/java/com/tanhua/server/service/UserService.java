@@ -6,6 +6,7 @@ import com.tanhua.dubbo.api.UserApi;
 import com.tanhua.dubbo.api.UserInfoApi;
 import com.tanhua.model.bo.UserInfoBO;
 import com.tanhua.model.domain.User;
+import com.tanhua.model.domain.UserInfo;
 import com.tanhua.model.vo.UserInfoVO;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.RandomStringUtils;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class UserService {
@@ -97,5 +99,12 @@ public class UserService {
 
     public void loginRegInfo(UserInfoVO userInfoVO, UserInfoBO userInfoBO) {
         userInfoApi.save(userInfoVO, userInfoBO);
+    }
+
+    public UserInfoVO findUserInfoById(UserInfoBO userInfoBO, Long userID) {
+        if (!Objects.isNull(userID)){
+            return userInfoApi.findUserInfoById(userID);
+        }
+        return userInfoApi.findUserInfoById(userInfoBO.getId());
     }
 }

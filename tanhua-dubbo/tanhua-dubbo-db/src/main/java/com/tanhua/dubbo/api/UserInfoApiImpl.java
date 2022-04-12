@@ -35,4 +35,12 @@ public class UserInfoApiImpl implements UserInfoApi{
             userInfoMapper.updateById(userInfo);
         }
     }
+
+    @Override
+    public UserInfoVO findUserInfoById(Long userID) {
+        UserInfo userInfo = userInfoMapper.selectOne(new QueryWrapper<UserInfo>().lambda().eq(UserInfo::getId, userID));
+        UserInfoVO userInfoVO = new UserInfoVO();
+        BeanUtils.copyProperties(userInfo, userInfoVO);
+        return userInfoVO;
+    }
 }

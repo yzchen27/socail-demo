@@ -1,6 +1,7 @@
 package com.tanhua.dubbo.api;
 
 import com.tanhua.model.bo.UserInfoBO;
+import com.tanhua.model.domain.UserInfo;
 import com.tanhua.model.vo.UserInfoVO;
 
 /**
@@ -17,4 +18,11 @@ public interface UserInfoApi {
      * @param userInfoBO
      */
     void save(UserInfoVO userInfoVO, UserInfoBO userInfoBO);
+
+    /**
+     *  根据id查找用户信息
+     * @param userID
+     * @return
+     */
+    UserInfoVO findUserInfoById(Long userID);
 }
