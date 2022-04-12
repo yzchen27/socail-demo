@@ -3,6 +3,7 @@ package com.tanhua.server.controller;
 import com.tanhua.commons.utils.JwtUtils;
 import com.tanhua.model.bo.UserInfoBO;
 import com.tanhua.model.vo.UserInfoVO;
+import com.tanhua.server.config.UserHolder;
 import com.tanhua.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -51,10 +52,9 @@ public class LoginController {
      * @return
      */
     @PostMapping("loginReginfo")
-    public ResponseEntity loginRegInfo(@RequestBody UserInfoVO userInfoVO,
-                                       @RequestHeader(value = "Authorization") String token){
-        UserInfoBO userInfoBO = JwtUtils.getClaims(token);
-        userService.loginRegInfo(userInfoVO, userInfoBO);
+    public ResponseEntity loginRegInfo(@RequestBody UserInfoVO userInfoVO){
+        UserInfoBO user = UserHolder.getUser();
+        userService.loginRegInfo(userInfoVO, user);
         return ResponseEntity.ok(null);
     }
 

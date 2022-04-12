@@ -4,6 +4,7 @@ import com.tanhua.commons.utils.JwtUtils;
 import com.tanhua.model.bo.UserInfoBO;
 import com.tanhua.model.domain.UserInfo;
 import com.tanhua.model.vo.UserInfoVO;
+import com.tanhua.server.config.UserHolder;
 import com.tanhua.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,15 +26,15 @@ public class UsersController {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity getUserInfo(@RequestHeader("Authorization") String token,Long userID){
-        UserInfoBO userInfoBO = JwtUtils.getClaims(token);
-        UserInfoVO userInfo = userService.findUserInfoById(userInfoBO, userID);
+    public ResponseEntity getUserInfo(Long userID) {
+        UserInfoBO user = UserHolder.getUser();
+        UserInfoVO userInfo = userService.findUserInfoById(user, userID);
         return ResponseEntity.ok(userInfo);
     }
 
     @RequestMapping(method = PUT)
-    public ResponseEntity updateUserInfo(@RequestHeader("Authorization") String token, @RequestBody UserInfo userInfo){
-        Long id = JwtUtils.getClaims(token).getId();
+    public ResponseEntity updateUserInfo(@RequestBody UserInfo userInfo) {
+        Long id = UserHolder.getId();
         userInfo.setId(id);
         userService.updateUserInfo(userInfo);
         return ResponseEntity.ok(null);
