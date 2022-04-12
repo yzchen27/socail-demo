@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+
 /**
  * @program: social-demo
  * @description: 用户信息Controller
@@ -27,5 +29,13 @@ public class UsersController {
         UserInfoBO userInfoBO = JwtUtils.getClaims(token);
         UserInfoVO userInfo = userService.findUserInfoById(userInfoBO, userID);
         return ResponseEntity.ok(userInfo);
+    }
+
+    @RequestMapping(method = PUT)
+    public ResponseEntity updateUserInfo(@RequestHeader("Authorization") String token, @RequestBody UserInfo userInfo){
+        Long id = JwtUtils.getClaims(token).getId();
+        userInfo.setId(id);
+        userService.updateUserInfo(userInfo);
+        return ResponseEntity.ok(null);
     }
 }

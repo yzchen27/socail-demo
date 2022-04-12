@@ -25,4 +25,10 @@ public interface UserInfoApi {
      * @return
      */
     UserInfoVO findUserInfoById(Long userID);
+
+    /**
+     *  更新用户信息
+     * @param userInfo
+     */
+    void updateUserInfo(UserInfo userInfo);
 }

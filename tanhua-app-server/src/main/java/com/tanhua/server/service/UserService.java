@@ -107,4 +107,8 @@ public class UserService {
         }
         return userInfoApi.findUserInfoById(userInfoBO.getId());
     }
+
+    public void updateUserInfo(UserInfo userInfo) {
+        userInfoApi.updateUserInfo(userInfo);
+    }
 }

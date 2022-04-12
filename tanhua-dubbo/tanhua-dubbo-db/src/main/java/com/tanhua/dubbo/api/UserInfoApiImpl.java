@@ -43,4 +43,9 @@ public class UserInfoApiImpl implements UserInfoApi{
         BeanUtils.copyProperties(userInfo, userInfoVO);
         return userInfoVO;
     }
+
+    @Override
+    public void updateUserInfo(UserInfo userInfo) {
+        userInfoMapper.updateById(userInfo);
+    }
 }
