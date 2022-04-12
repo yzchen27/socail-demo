@@ -49,15 +49,15 @@ public class UserService {
      * @param code
      */
     public Map loginVerification(String phone, String code) {
-        //1、从redis中获取下发的验证码
-        String redisCode = redisTemplate.opsForValue().get("CHECK_CODE_" + phone);
-        //2、对验证码进行校验（验证码是否存在，是否和输入的验证码一致）
-        if(StringUtils.isEmpty(redisCode) || !redisCode.equals(code)) {
-            //验证码无效
-            throw new RuntimeException("验证码错误");
-        }
-        //3、删除redis中的验证码
-        redisTemplate.delete("CHECK_CODE_" + phone);
+//        //1、从redis中获取下发的验证码
+//        String redisCode = redisTemplate.opsForValue().get("CHECK_CODE_" + phone);
+//        //2、对验证码进行校验（验证码是否存在，是否和输入的验证码一致）
+//        if(StringUtils.isEmpty(redisCode) || !redisCode.equals(code)) {
+//            //验证码无效
+//            throw new RuntimeException("验证码错误");
+//        }
+//        //3、删除redis中的验证码
+//        redisTemplate.delete("CHECK_CODE_" + phone);
         //4、通过手机号码查询用户
         User user = userApi.findByMobile(phone);
         boolean isNew = false;

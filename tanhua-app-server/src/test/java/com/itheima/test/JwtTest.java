@@ -1,6 +1,8 @@
 package com.itheima.test;
 
 import com.tanhua.commons.utils.DateUtil;
+import com.tanhua.commons.utils.JwtUtils;
+import com.tanhua.model.bo.UserInfoBO;
 import io.jsonwebtoken.*;
 import org.junit.Test;
 
@@ -34,20 +36,8 @@ public class JwtTest {
      */
     @Test
     public void testParseToken() {
-        String token = "eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxODEyMDg1ODY3MCIsImlkIjoiMTAwMCIsImV4cCI6MTY0OTU5Mzk4OX0.NymbP6_3fyFF3tOWzEDKCZ4Cn1uESomLKIvMR5mV4U-TzdwTDaEnViL46mjXcDQFgYVaFM_Q06hMzf54fNI4Bw";
-        try {
-            Claims claims = Jwts.parser()
-                    .setSigningKey("cyz".getBytes(StandardCharsets.UTF_8))
-                    .parseClaimsJws(token)
-                    .getBody();
-            Object id = claims.get("id");
-            Object mobile = claims.get("mobile");
-            System.out.println(id + "--" + mobile);
-        }catch (ExpiredJwtException e) {
-            System.out.println("token已过期");
-        }catch (SignatureException e) {
-            System.out.println("token不合法");
-        }
-
+        String token = "eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxODEyMDg1ODY3MCIsImlkIjoiMTAwMCIsImV4cCI6MTY0OTgxNTU5N30.CpAvpISS3z-qv4Bt4EYgJVl74j9u_tfcA1CMGL7EJl1CwlyMAW_FkrVfjifOCVGRthCOK7saFrxK0X4LEWXMzA";
+        UserInfoBO userInfoBO = JwtUtils.getClaims(token);
+        System.out.println(userInfoBO);
     }
 }

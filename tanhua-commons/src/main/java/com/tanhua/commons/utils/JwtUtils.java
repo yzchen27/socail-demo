@@ -1,10 +1,11 @@
 package com.tanhua.commons.utils;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.tanhua.model.bo.UserInfoBO;
+import io.jsonwebtoken.*;
+import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Map;
 
@@ -14,7 +15,7 @@ public class JwtUtils {
     private static final int TOKEN_TIME_OUT = 3_600;
 
     // 加密KEY
-    private static final String TOKEN_SECRET = "itcast";
+    private static final String TOKEN_SECRET = "cyz";
 
 
     // 生成Token
@@ -31,10 +32,16 @@ public class JwtUtils {
     /**
      * 获取Token中的claims信息
      */
-    private static Claims getClaims(String token) {
-        return Jwts.parser()
-                .setSigningKey(TOKEN_SECRET)
-                .parseClaimsJws(token).getBody();
+    public static UserInfoBO getClaims(String token) {
+        Claims body = null;
+        try {
+            body = Jwts.parser()
+                    .setSigningKey(TOKEN_SECRET.getBytes(StandardCharsets.UTF_8))
+                    .parseClaimsJws(token).getBody();
+        }catch (ExpiredJwtException |SignatureException e){
+            throw new SignatureException("token 异常:" + e.getMessage());
+        }
+        return new UserInfoBO(Long.parseLong((String) body.get("id")), body.get("mobile").toString(), body.getExpiration());
     }
 
 
@@ -42,14 +49,14 @@ public class JwtUtils {
      * 是否有效 true-有效，false-失效
      */
     public static boolean verifyToken(String token) {
-      
+
         if(StringUtils.isEmpty(token)) {
             return false;
         }
-        
+
         try {
             Claims claims = Jwts.parser()
-                    .setSigningKey("itcast")
+                    .setSigningKey(TOKEN_SECRET.getBytes(StandardCharsets.UTF_8))
                     .parseClaimsJws(token)
                     .getBody();
         }catch (Exception e) {
@@ -58,4 +65,5 @@ public class JwtUtils {
 
 		return true;
     }
+
 }
