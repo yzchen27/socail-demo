@@ -10,6 +10,7 @@ import com.tanhua.model.domain.UserInfo;
 import com.tanhua.model.vo.UserInfoVO;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -42,10 +43,10 @@ public class UserService {
      * @param phone
      */
     public void sendMsg(String phone) {
-        //1、随机生成6位数字
-        String code = RandomStringUtils.randomNumeric(6);
-        //2、调用template对象，发送手机短信
-        template.sendSms(phone, code);
+        //1、随机生成6位数字  RandomStringUtils.randomNumeric(6);
+        String code = "123456";
+        //2、调用template对象，发送手机短信 TODO 暂时放开验证码
+//        template.sendSms(phone, code);
         //3、将验证码存入到redis
         redisTemplate.opsForValue().set("CHECK_CODE_" + phone, code, Duration.ofMinutes(5));
     }
@@ -58,16 +59,15 @@ public class UserService {
      * @param code
      */
     public Map loginVerification(String phone, String code) {
-        // TODO 验证码暂时放开
-//        //1、从redis中获取下发的验证码
-//        String redisCode = redisTemplate.opsForValue().get("CHECK_CODE_" + phone);
-//        //2、对验证码进行校验（验证码是否存在，是否和输入的验证码一致）
-//        if(StringUtils.isEmpty(redisCode) || !redisCode.equals(code)) {
-//            //验证码无效
-//            throw new RuntimeException("验证码错误");
-//        }
-//        //3、删除redis中的验证码
-//        redisTemplate.delete("CHECK_CODE_" + phone);
+        //1、从redis中获取下发的验证码
+        String redisCode = redisTemplate.opsForValue().get("CHECK_CODE_" + phone);
+        //2、对验证码进行校验（验证码是否存在，是否和输入的验证码一致）
+        if(StringUtils.isEmpty(redisCode) || !redisCode.equals(code)) {
+            //验证码无效
+            throw new RuntimeException("验证码错误");
+        }
+        //3、删除redis中的验证码
+        redisTemplate.delete("CHECK_CODE_" + phone);
         //4、通过手机号码查询用户
         User user = userApi.findByMobile(phone);
         boolean isNew = false;

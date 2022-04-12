@@ -3,6 +3,8 @@ package com.tanhua.server.interceptor;
 import cn.hutool.http.HttpStatus;
 import com.tanhua.commons.utils.JwtUtils;
 import com.tanhua.model.bo.UserInfoBO;
+import com.tanhua.model.exception.BizException;
+import com.tanhua.model.vo.ErrorResult;
 import com.tanhua.server.config.UserHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -27,8 +29,7 @@ public class TokenInterceptor implements HandlerInterceptor {
             claims = JwtUtils.getClaims(authorization);
         }catch (Exception e){
             log.error("拦截器异常:{}", e.getMessage());
-            response.setStatus(HttpStatus.HTTP_UNAUTHORIZED);
-            return false;
+            throw new BizException(ErrorResult.notAuth());
         }
         UserHolder.set(claims);
         return true;

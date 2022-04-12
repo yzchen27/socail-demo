@@ -2,6 +2,8 @@ package com.tanhua.commons.utils;
 
 import cn.hutool.http.server.HttpServerRequest;
 import com.tanhua.model.bo.UserInfoBO;
+import com.tanhua.model.exception.BizException;
+import com.tanhua.model.vo.ErrorResult;
 import io.jsonwebtoken.*;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
@@ -34,14 +36,9 @@ public class JwtUtils {
      * 获取Token中的claims信息
      */
     public static UserInfoBO getClaims(String token) {
-        Claims body = null;
-        try {
-            body = Jwts.parser()
-                    .setSigningKey(TOKEN_SECRET.getBytes(StandardCharsets.UTF_8))
-                    .parseClaimsJws(token).getBody();
-        }catch (ExpiredJwtException |SignatureException e){
-            throw new SignatureException("token 异常:" + e.getMessage());
-        }
+        Claims body =Jwts.parser()
+                .setSigningKey(TOKEN_SECRET.getBytes(StandardCharsets.UTF_8))
+                .parseClaimsJws(token).getBody();
         Integer id = (Integer) body.get("id");
         return new UserInfoBO(id.longValue(), body.get("mobile").toString(), body.getExpiration());
     }
