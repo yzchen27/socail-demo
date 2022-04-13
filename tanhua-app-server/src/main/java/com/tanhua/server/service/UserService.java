@@ -4,9 +4,11 @@ import com.tanhua.autoconfig.template.SmsTemplate;
 import com.tanhua.commons.utils.JwtUtils;
 import com.tanhua.dubbo.api.UserApi;
 import com.tanhua.dubbo.api.UserInfoApi;
+import com.tanhua.dubbo.api.UserSettingsApi;
 import com.tanhua.model.bo.UserInfoBO;
 import com.tanhua.model.domain.User;
 import com.tanhua.model.domain.UserInfo;
+import com.tanhua.model.vo.GeneralSettingsVO;
 import com.tanhua.model.vo.UserInfoVO;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.RandomStringUtils;
@@ -35,6 +37,9 @@ public class UserService {
 
     @DubboReference
     private UserInfoApi userInfoApi;
+
+    @DubboReference
+    private UserSettingsApi userSettingsApi;
 
 
     /**
@@ -97,10 +102,21 @@ public class UserService {
         return userApi.findByMobile(mobile);
     }
 
+    /**
+     *  初始化信息
+     * @param userInfoVO
+     * @param userInfoBO
+     */
     public void loginRegInfo(UserInfoVO userInfoVO, UserInfoBO userInfoBO) {
         userInfoApi.save(userInfoVO, userInfoBO);
     }
 
+    /**
+     *  根据id查询用户信息
+     * @param userInfoBO
+     * @param userID
+     * @return
+     */
     public UserInfoVO findUserInfoById(UserInfoBO userInfoBO, Long userID) {
         if (!Objects.isNull(userID)){
             return userInfoApi.findUserInfoById(userID);
@@ -108,7 +124,20 @@ public class UserService {
         return userInfoApi.findUserInfoById(userInfoBO.getId());
     }
 
+    /**
+     *  更新用户信息
+     * @param userInfo
+     */
     public void updateUserInfo(UserInfo userInfo) {
         userInfoApi.updateUserInfo(userInfo);
+    }
+
+    /**
+     *  根据用户查询通用设置信息
+     * @param id
+     * @return
+     */
+    public GeneralSettingsVO findUserGeneralSettingsByUserId(Long id){
+        return userSettingsApi.findUserGeneralSettingsByUserId(id);
     }
 }

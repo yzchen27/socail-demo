@@ -39,4 +39,11 @@ public class UsersController {
         userService.updateUserInfo(userInfo);
         return ResponseEntity.ok(null);
     }
+
+    @GetMapping("settings")
+    public ResponseEntity userSettings(){
+        Long id = UserHolder.getId();
+        return ResponseEntity.ok(userService.findUserGeneralSettingsByUserId(id));
+
+    }
 }

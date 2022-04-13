@@ -6,16 +6,16 @@ spring:
     name: tanhua-app-server
   redis:  #redis配置
     port: 6379
-    host: 192.168.10.11
+    host: 10.8.0.1
   cloud:  #nacos配置
     nacos:
       discovery:
-        server-addr: 192.168.10.11:8848
+        server-addr: 10.8.0.1:8848
         username: nacos
         password: nacos
 dubbo:    #dubbo配置
   registry:
-    address: spring-cloud://192.168.10.11:8848
+    address: spring-cloud://10.8.0.1:8848
   consumer:
     check: false
 tanhua:

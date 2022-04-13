@@ -5,19 +5,19 @@ spring:
     name: tanhua-dubbo-db
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.10.11:3306/tanhua?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&useSSL=false
+    url: jdbc:mysql://10.8.0.1:3306/tanhua?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&useSSL=false
     username: root
-    password: Root@123456
+    password: Cyz19980727!!
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.10.11:8848
+        server-addr: 10.8.0.1:8848
 dubbo:
   protocol:
     name: dubbo
     port: 20881
   registry:
-    address: spring-cloud://192.168.10.11:8848
+    address: spring-cloud://10.8.0.1:8848
   scan:
     base-packages: com.tanhua.dubbo.api  #dubbo中包扫描
 
