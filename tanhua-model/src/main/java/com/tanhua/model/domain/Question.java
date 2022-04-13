@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 黑名单
+ *
  * </p>
  *
  * @author yzchen
@@ -20,16 +20,24 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("tb_black_list")
-public class BlackList extends BasePojo  implements Serializable {
+@TableName("tb_question")
+public class Question extends BasePojo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
+    /**
+     * 用户id
+     */
     private Long userId;
 
-    private Long blackUserId;
+    /**
+     * 问题内容
+     */
+    private String txt;
+
+
 
 }

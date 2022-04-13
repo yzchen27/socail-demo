@@ -2,6 +2,7 @@ package com.tanhua.server.service;
 
 import com.tanhua.autoconfig.template.SmsTemplate;
 import com.tanhua.commons.utils.JwtUtils;
+import com.tanhua.dubbo.api.QuestionApi;
 import com.tanhua.dubbo.api.UserApi;
 import com.tanhua.dubbo.api.UserInfoApi;
 import com.tanhua.dubbo.api.UserSettingsApi;
@@ -10,6 +11,7 @@ import com.tanhua.model.domain.User;
 import com.tanhua.model.domain.UserInfo;
 import com.tanhua.model.vo.GeneralSettingsVO;
 import com.tanhua.model.vo.UserInfoVO;
+import com.tanhua.server.config.UserHolder;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
@@ -41,6 +43,8 @@ public class UserService {
     @DubboReference
     private UserSettingsApi userSettingsApi;
 
+    @DubboReference
+    private QuestionApi questionApi;
 
     /**
      * 发送短信验证码
@@ -139,5 +143,14 @@ public class UserService {
      */
     public GeneralSettingsVO findUserGeneralSettingsByUserId(Long id){
         return userSettingsApi.findUserGeneralSettingsByUserId(id);
+    }
+
+    /**
+     *  设置陌生人问题
+     * @param content
+     */
+    public void setStrangeContent(String content) {
+        Long id = UserHolder.getId();
+        questionApi.setStrangeContent(id, content);
     }
 }

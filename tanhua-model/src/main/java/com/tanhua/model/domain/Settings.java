@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("tb_settings")
-public class Settings implements Serializable {
+public class Settings extends BasePojo  implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -33,21 +33,17 @@ public class Settings implements Serializable {
     /**
      * 推送喜欢通知
      */
-    private Integer likeNotification;
+    private Boolean likeNotification;
 
     /**
      * 推送评论通知
      */
-    private Integer pinglunNotification;
+    private Boolean pinglunNotification;
 
     /**
      * 推送公告通知
      */
-    private Integer gonggaoNotification;
-
-    private LocalDateTime created;
-
-    private LocalDateTime updated;
+    private Boolean gonggaoNotification;
 
 
 }

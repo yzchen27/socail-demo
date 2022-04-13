@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 /**
@@ -32,6 +34,12 @@ public class UsersController {
         return ResponseEntity.ok(userInfo);
     }
 
+
+    /**
+     *  更新用户信息
+     * @param userInfo
+     * @return
+     */
     @RequestMapping(method = PUT)
     public ResponseEntity updateUserInfo(@RequestBody UserInfo userInfo) {
         Long id = UserHolder.getId();
@@ -40,10 +48,25 @@ public class UsersController {
         return ResponseEntity.ok(null);
     }
 
+    /**
+     *  获取通用设置
+     * @return
+     */
     @GetMapping("settings")
     public ResponseEntity userSettings(){
         Long id = UserHolder.getId();
         return ResponseEntity.ok(userService.findUserGeneralSettingsByUserId(id));
 
+    }
+
+    /**
+     *  设置陌生人问题
+     * @return
+     */
+    @PostMapping("/questions")
+    public ResponseEntity setStrangeContent(@RequestBody Map map){
+        String content = (String) map.get("content");
+        userService.setStrangeContent(content);
+        return ResponseEntity.ok(null);
     }
 }
