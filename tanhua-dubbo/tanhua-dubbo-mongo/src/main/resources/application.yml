@@ -1,0 +1,22 @@
+server:
+  port: 18082
+spring:
+  application:
+    name: tanhua-dubbo-mongo
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 10.8.0.1:8848
+        username: nacos
+        password: nacos
+  data:
+    mongodb:
+      uri: mongodb://10.8.0.1:27017/tanhua
+dubbo:
+  protocol:
+    name: dubbo
+    port: 20882
+  registry:
+    address: spring-cloud://10.8.0.1:8848
+  scan:
+    base-packages: com.tanhua.dubbo.api

@@ -45,6 +45,11 @@ public class UserInfoApiImpl implements UserInfoApi{
     }
 
     @Override
+    public UserInfo findUserInfoByUserId(Long userId) {
+        return userInfoMapper.selectOne(new QueryWrapper<UserInfo>().lambda().eq(UserInfo::getId, userId));
+    }
+
+    @Override
     public void updateUserInfo(UserInfo userInfo) {
         userInfoMapper.updateById(userInfo);
     }

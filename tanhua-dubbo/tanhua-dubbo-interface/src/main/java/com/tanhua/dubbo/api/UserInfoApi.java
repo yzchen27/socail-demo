@@ -26,6 +26,8 @@ public interface UserInfoApi {
      */
     UserInfoVO findUserInfoById(Long userID);
 
+    UserInfo findUserInfoByUserId(Long userId);
+
     /**
      *  更新用户信息
      * @param userInfo

@@ -1,7 +1,6 @@
 package com.tanhua.server.controller;
 
 import com.tanhua.model.bo.PageResult;
-import com.tanhua.server.config.UserHolder;
 import com.tanhua.server.service.BlackListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +29,7 @@ public class BlackListController {
         return ResponseEntity.ok(pr);
     }
 
-    @DeleteMapping("#{uid}")
+    @DeleteMapping("{uid}")
     public ResponseEntity deleteUserById(@PathVariable Long uid){
         blackListService.deleteUserById(uid);
         return ResponseEntity.ok(null);
