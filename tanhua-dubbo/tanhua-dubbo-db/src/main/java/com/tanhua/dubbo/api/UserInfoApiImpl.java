@@ -9,6 +9,8 @@ import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 /**
  * @program: social-demo
  * @description: 用户信息实现类
@@ -52,5 +54,10 @@ public class UserInfoApiImpl implements UserInfoApi{
     @Override
     public void updateUserInfo(UserInfo userInfo) {
         userInfoMapper.updateById(userInfo);
+    }
+
+    @Override
+    public List<UserInfo> batchSelectByUserIdList(List<Long> collect) {
+        return userInfoMapper.selectBatchIds(collect);
     }
 }

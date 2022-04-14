@@ -1,6 +1,9 @@
 package com.tanhua.dubbo.api;
 
+import com.tanhua.model.dto.RecommendUserDTO;
 import com.tanhua.model.mongo.RecommendUser;
+
+import java.util.List;
 
 /**
  * @program: social-demo
@@ -15,4 +18,6 @@ public interface RecommendUserApi {
      * @return
      */
     RecommendUser queryWithMaxScore(Long toUserId);
+
+    List<RecommendUser> queryRecommendUserList(Long id, RecommendUserDTO recommendUserDTO);
 }

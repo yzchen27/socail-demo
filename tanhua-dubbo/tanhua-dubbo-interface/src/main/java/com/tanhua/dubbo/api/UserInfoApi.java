@@ -4,6 +4,8 @@ import com.tanhua.model.bo.UserInfoBO;
 import com.tanhua.model.domain.UserInfo;
 import com.tanhua.model.vo.UserInfoVO;
 
+import java.util.List;
+
 /**
  * @program: social-demo
  * @description: 用户信息
@@ -33,4 +35,6 @@ public interface UserInfoApi {
      * @param userInfo
      */
     void updateUserInfo(UserInfo userInfo);
+
+    List<UserInfo> batchSelectByUserIdList(List<Long> collect);
 }
